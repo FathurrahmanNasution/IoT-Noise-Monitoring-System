@@ -8,6 +8,7 @@ import { initializeSchema } from './utils/schema.js';
 
 const app = express();
 const PORT = parseInt(process.env.PORT) || 3001;
+const HOST = process.env.IP || '::'; // Listen on IPv6 and IPv4
 
 // --- Middleware ---
 app.use(helmet());
@@ -39,8 +40,8 @@ async function start() {
     // Initialize database schema on startup
     await initializeSchema();
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Noise IoT Backend running on http://localhost:${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.log(`🚀 Noise IoT Backend running on http://${HOST === '::' ? 'localhost' : HOST}:${PORT}`);
       console.log(`📡 API endpoints:`);
       console.log(`   POST   /api/noise`);
       console.log(`   GET    /api/noise/latest`);

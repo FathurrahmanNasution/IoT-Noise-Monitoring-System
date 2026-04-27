@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 var currentLevel by remember { mutableIntStateOf(1) }
                 var isMonitoring by remember { mutableStateOf(false) }
                 var isConnected by remember { mutableStateOf(false) }
-                var serverUrl by remember { mutableStateOf("https://stan-print-counts-triple.trycloudflare.com") }
+                var serverUrl by remember { mutableStateOf("https://reinny.alwaysdata.net") }
                 var apiKey by remember { mutableStateOf("kucing-ayam-goreng-2024") }
                 var sentCount by remember { mutableIntStateOf(0) }
                 var monitoringJob by remember { mutableStateOf<Job?>(null) }
