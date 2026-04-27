@@ -27,8 +27,12 @@ jobs:
       working-directory: ./android/NoiseDetector
       run: ./gradlew assembleDebug
 
-    - name: Upload APK as Artifact
-      uses: actions/upload-artifact@v4
+    - name: Upload APK to Releases
+      uses: softprops/action-gh-release@v2
       with:
-        name: NoiseDetector-App
-        path: android/NoiseDetector/app/build/outputs/apk/debug/app-debug.apk
+        tag_name: latest
+        name: "Latest Android Build"
+        body: "Download the `app-debug.apk` below to install the IoT Noise Monitor on your Android device."
+        files: android/NoiseDetector/app/build/outputs/apk/debug/app-debug.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
