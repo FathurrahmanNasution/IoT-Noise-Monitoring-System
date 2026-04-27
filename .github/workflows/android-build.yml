@@ -5,6 +5,9 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch: # Adds a button to manually trigger the build
 
+permissions:
+  contents: write # This tells GitHub to allow this script to create Releases!
+
 jobs:
   build:
     runs-on: ubuntu-latest
