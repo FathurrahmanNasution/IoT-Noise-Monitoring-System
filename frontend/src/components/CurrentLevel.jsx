@@ -12,13 +12,18 @@ export default function CurrentLevel({ latestReadings }) {
   const [displayLevel, setDisplayLevel] = useState(0);
   const [displayDb, setDisplayDb] = useState(0);
 
-  // Compute unified level from all devices
-  const currentLevel = latestReadings.length > 0
-    ? Math.round(latestReadings.reduce((sum, r) => sum + r.noise_level, 0) / latestReadings.length)
+  // Filter for devices that reported in the last 60 seconds
+  const activeReadings = latestReadings.filter(
+    (r) => (Date.now() - new Date(r.recorded_at).getTime()) < 60000
+  );
+
+  // Use the highest noise level currently detected in the area
+  const currentLevel = activeReadings.length > 0
+    ? Math.max(...activeReadings.map((r) => r.noise_level))
     : 0;
 
-  const currentDb = latestReadings.length > 0
-    ? (latestReadings.reduce((sum, r) => sum + r.decibel_value, 0) / latestReadings.length).toFixed(1)
+  const currentDb = activeReadings.length > 0
+    ? Math.max(...activeReadings.map((r) => r.decibel_value)).toFixed(1)
     : 0;
 
   // Animate level transitions
